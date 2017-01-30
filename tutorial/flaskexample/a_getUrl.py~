@@ -1,0 +1,6 @@
+def getUrl():
+	#returnUrl = "https://www.yelp.com/biz/waitrose-wilmslow"
+	#returnUrl = 'https://upload.wikimedia.org/wikipedia/commons/0/07/Emperor_Penguin_Manchot_empereur.jpg'
+
+	returnUrl = open('waitrose_boxed.jpg', 'rb').read().encode('base64').replace('\n', '')
+	return returnUrl

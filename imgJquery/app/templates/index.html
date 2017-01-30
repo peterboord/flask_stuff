@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<script type=text/javascript>
+  $(function() {
+    $('a#calculate').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        a: $('input[name="a"]').val(),
+        b: $('input[name="b"]').val()
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
+
+<h1>jQuery Example</h1>
+<img id="imgElement" src={{photo1}} alt="Photo"/>
+<p>
+  <input type="text" size="5" name="a"> +
+  <input type="text" size="5" name="b"> =
+  <span id="result">?</span>
+
+<p><a href=# id="calculate">calculate server side</a>
+
+<p id="demo"></p>
+
+<script type=text/javascript>
+  $(function() {
+	$('#imgElement').click( function(event) {
+	  $.getJSON($SCRIPT_ROOT + '/_imgClick', {
+            x: event.clientX,
+            y: event.clientY
+      	  }, function(data) {
+        $("#demo").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
+
+{% endblock %}

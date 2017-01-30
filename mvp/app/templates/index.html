@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1>jQuery Example</h1>
+<img id="imgElement" src=data:image/jpg;base64,{{imgData}} alt="Photo" />
+
+<object https://www.yelp.com data=https://www.yelp.com width="600" height="400"> <embed src=https://www.yelp.com width="600" height="400"> </embed> </object>
+
+<script type=text/javascript>
+  $(function() {
+	$('#imgElement').click( function(event) {
+	  $.get($SCRIPT_ROOT + '/_imgClick', {
+            x: event.clientX,
+            y: event.clientY
+      	  }, function(yelpUrl) {
+        $('#yelpPage').attr('src',yelpUrl)
+      });
+      return false;
+    });
+  });
+</script>
+
+{% endblock %}

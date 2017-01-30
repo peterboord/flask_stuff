@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1>jQuery Example</h1>
+<img id="imgElement" src=data:image/jpg;base64,{{imgData}} alt="Photo" />
+<object data=http://www.web-source.net width="600" height="400"> <embed src=http://www.web-source.net width="600" height="400"> </embed> Error: Embedded data could not be displayed. </object>
+
+<script type=text/javascript>
+  $(function() {
+	$('#imgElement').click( function(event) {
+	  $.get($SCRIPT_ROOT + '/_imgClick', {
+            x: event.clientX,
+            y: event.clientY
+      	  }, function(boxedText) {
+        $('#imgElement').attr('src',"data:image/jpg;base64," + imgData)
+        $('#text').text(boxedText);
+      });
+      return false;
+    });
+  });
+</script>
+
+{% endblock %}
