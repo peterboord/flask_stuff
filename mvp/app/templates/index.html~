@@ -3,9 +3,13 @@
 
 <h1>jQuery Example</h1>
 <img id="imgElement" src=data:image/jpg;base64,{{imgData}} alt="Photo" />
-
-<object data=https://www.yelp.com width="600" height="400"> <embed id="yelpPage" src=https://www.yelp.com width="600" height="400"> </embed> </object>
-
+<body>
+<div class = "container">
+	<div>
+		<embed id="yelpPage" width="600" height="400" />
+	</div>
+</div>
+</body>
 <script type=text/javascript>
   $(function() {
 	$('#imgElement').click( function(event) {
@@ -13,7 +17,8 @@
             x: event.clientX,
             y: event.clientY
       	  }, function(yelpUrl) {
-        $('#yelpPage').attr('src',yelpUrl)
+        var clone=$('#yelpPage').clone();
+        $('#yelpPage').replaceWith(clone.attr('src',yelpUrl))
       });
       return false;
     });

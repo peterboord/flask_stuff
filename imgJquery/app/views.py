@@ -27,8 +27,8 @@ def imgClick():
 
 @app.route('/')
 def index():
-	photo1 = 'http://i.imgur.com/Oyz9Lgg.jpg'
-	return render_template('index.html', photo1 = photo1)
+	imgData = open('/home/pboord/Downloads/yelp/waitrose.jpg', 'rb').read().encode('base64').replace('\n', '')
+	return render_template('index.html', imgData = imgData)
 
 if __name__ == '__main__':
     app.run()

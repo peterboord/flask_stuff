@@ -26,7 +26,9 @@
     		</div>
   		<div class = "container">
         		<div>
-				<object> <embed src=data:image/jpg;base64,{{theUrl}} width="600" height="400"> </embed> Error: Embedded data could not be displayed. </object>
+				<!-- <object> <embed src=data:image/jpg;base64,{{theUrl}} width="600" height="400"> </embed> </object> -->
+				<!-- <object> <embed src=http://yelp.com width="600" height="400"> </embed> </object> -->
+				<object data=https://www.yelp.com/biz/paseo-caribbean-food-fremont-seattle-2 width="600" height="400"> <embed src=https://www.yelp.com/biz/paseo-caribbean-food-fremont-seattle-2 width="600" height="400"> </embed> Error: Embedded data could not be displayed. </object>
         		</div>
     		</div>
 

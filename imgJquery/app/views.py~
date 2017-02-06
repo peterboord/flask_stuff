@@ -18,6 +18,12 @@ def add_numbers():
     b = request.args.get('b', 0, type=int)
     return jsonify(result=a + b)
 
+@app.route('/_imgClick')
+def imgClick():
+    x = request.args.get('x', 0, type=float)
+    y = request.args.get('y', 0, type=float)
+    return jsonify(result=x + y/1000)
+
 
 @app.route('/')
 def index():

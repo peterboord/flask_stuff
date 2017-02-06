@@ -6,12 +6,10 @@ from a_getImgData import getImgData
 
 @app.route('/_imgClick')
 def imgClick():
-	x = request.args.get('x', 0, type=float)
-	y = request.args.get('y', 0, type=float)
-	yelpUrl = getImgData(x,y)
-	#imgData = open('/home/pboord/Downloads/yelp/waitrose_boxed.jpg', 'rb').read().encode('base64').replace('\n', '')
-	#yelpUrl="https://www.yelp.com/biz/pike-place-chowder-seattle"
-	return jsonify(yelpUrl)
+	x = request.args.get('x', 0, type=int)
+	y = request.args.get('y', 0, type=int)
+	dataDic = getImgData(x,y)
+	return jsonify(dataDic)
                     
 
 @app.route('/')

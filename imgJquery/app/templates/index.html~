@@ -16,7 +16,7 @@
 </script>
 
 <h1>jQuery Example</h1>
-<img oneclick="showCoords(event)" src={{photo1}} alt="Photo"/>
+<img id="imgElement" src={{photo1}} alt="Photo"/>
 <p>
   <input type="text" size="5" name="a"> +
   <input type="text" size="5" name="b"> =
@@ -26,13 +26,18 @@
 
 <p id="demo"></p>
 
-<script>
-function showCoords(event) {
-    var x = event.clientX;
-    var y = event.clientY;
-    var coords = "X coords: " + x + ", Y coords: " + y;
-    document.getElementById("demo").innerHTML = coords;
-}
+<script type=text/javascript>
+  $(function() {
+	$('#imgElement').click( function(event) {
+	  $.getJSON($SCRIPT_ROOT + '/_imgClick', {
+            x: event.clientX,
+            y: event.clientY
+      	  }, function(data) {
+        $("#demo").text(data.result);
+      });
+      return false;
+    });
+  });
 </script>
 
 {% endblock %}
