@@ -1,24 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<h1>jQuery Example</h1>
+<h1>oneClick!</h1>
+<img id="iphoneTopLeft" src="http://i.imgur.com/VEwl080.jpg" alt="iphone" />
 <img id="imgElement" src=data:image/jpg;base64,{{imgData}} alt="Photo" />
-<body>
-<div class = "container">
-	<div>
-		<embed id="yelpPage" width="600" height="400" />
-	</div>
-</div>
-</body>
+<p id="boxText"></p>
+<embed id="yelpPage" width="600" height="400" />
 <script type=text/javascript>
   $(function() {
 	$('#imgElement').click( function(event) {
-	  $.get($SCRIPT_ROOT + '/_imgClick', {
+	  $.getJSON($SCRIPT_ROOT + '/_imgClick', {
             x: event.clientX,
             y: event.clientY
-      	  }, function(yelpUrl) {
+      	  }, function(dataDic) {
         var clone=$('#yelpPage').clone();
-        $('#yelpPage').replaceWith(clone.attr('src',yelpUrl))
+        $('#yelpPage').replaceWith(clone.attr('src',dataDic['yelpUrl']));
+        var clone=$('#imgElement').clone(true);
+	$('#imgElement').replaceWith(clone.attr('src','data:image/jpg;base64,' + dataDic['imgData']));
+	$('#boxText').text(dataDic['boxText'])
       });
       return false;
     });

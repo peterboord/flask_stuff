@@ -1,0 +1,18 @@
+#container{
+    position: relative;
+    width: 400px;
+    height: 200px;
+}
+#iphone_image{
+    width: 100%;
+    height: 100%;
+    background: blue;
+}
+#iphoneScreen{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: red;
+}
