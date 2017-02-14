@@ -30,15 +30,15 @@ def getImgData(x,y,phoneColor,clickType,busNo):
             b0[3]=b[1]+b[3]
             return b0
 	# read API keys
-	with io.open('/home/pboord/Downloads/yelp/yelp_secret.json') as cred:
+	APP_ROOT = os.path.dirname(os.path.abspath('__init.py__'))   # refers to application_top
+	APP_STATIC = os.path.join(APP_ROOT, 'static')
+	with io.open(os.path.join(APP_STATIC,'yelp_secret.json')) as cred:
 		creds = json.load(cred)
 		auth = Oauth1Authenticator(**creds)
 		client = Client(auth)	
-	pathList = ['/home/pboord/Downloads/yelp/img/yelpHongKong4.jpg', '/home/pboord/Downloads/yelp/img/hongKong.jpg']
-	path_to_image_to_be_processed = pathList[busNo]
+	urlList = ['http://i.imgur.com/wIj4B4Xg.jpg']
 	if clickType == 'screenClick':
-		pathname = '/home/pboord/Downloads/yelp'
-		img = cv2.imread(path_to_image_to_be_processed)
+		img = cv2.imread(os.path.join(APP_STATIC,'yelpHongKong4.jpg'))
 		vis = img.copy()
 		channels = cv2.text.computeNMChannels(img)
 		cn = len(channels)-1
@@ -46,9 +46,9 @@ def getImgData(x,y,phoneColor,clickType,busNo):
   			channels.append((255-channels[c]))
 		b = []
 		for channel in channels:
-	  		erc1 = cv2.text.loadClassifierNM1(pathname+'/trained_classifierNM1.xml')
+	  		erc1 = cv2.text.loadClassifierNM1(os.path.join(APP_STATIC,'trained_classifierNM1.xml'))
   			er1 = cv2.text.createERFilterNM1(erc1,16,0.00015,0.13,0.2,True,0.1)
-  			erc2 = cv2.text.loadClassifierNM2(pathname+'/trained_classifierNM2.xml')
+  			erc2 = cv2.text.loadClassifierNM2(os.path.join(APP_STATIC,'trained_classifierNM2.xml'))
 	  		er2 = cv2.text.createERFilterNM2(erc2,0.5)
   			regions = cv2.text.detectRegions(channel,er1,er2)
   			rects = cv2.text.erGrouping(img,channel,[r.tolist() for r in regions])
@@ -80,30 +80,22 @@ def getImgData(x,y,phoneColor,clickType,busNo):
 		rectCM[:,1] = c[:,1] + c[:,3]/2
 		cmDiff = rectCM - np.matlib.repmat(np.array([x,y]),rectCM.shape[0],1)
 		closestRect = np.argmin(np.hypot(cmDiff[:,0],cmDiff[:,1]))
-	        #print rect
 		rect = c[closestRect,:]
-	        cv2.rectangle(vis, (rect[0],rect[1]), (rect[0]+rect[2],rect[1]+rect[3]), (0, 0, 0), 2)
-        	cv2.rectangle(vis, (rect[0],rect[1]), (rect[0]+rect[2],rect[1]+rect[3]), (255, 255, 255), 1)
-		cv2.imwrite('/home/pboord/Downloads/yelp/warped_boxed.jpg',vis)		
-		imgData = open('/home/pboord/Downloads/yelp/warped_boxed.jpg', 'rb').read().encode('base64').replace('\n', '')
+		imgData = urlList[busNo]
 		imSeg = img[ rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2] ]
-		cv2.imwrite('/home/pboord/Downloads/yelp/boxText.jpg',imSeg)
 		tools = pyocr.get_available_tools()
 		tool = tools[0]
 		langs = tool.get_available_languages()
 		lang = langs[0]
+		
 		boxText = tool.image_to_string(
-	    	#Image.open('/home/pboord/Downloads/yelp/textbox.jpg'),
 	    	Image.fromarray(imSeg),
 		lang="eng",
 		builder=pyocr.builders.TextBuilder()
 		)
 		# use first line if more than one
 		boxText=boxText.partition("\n")[0]
-		text_file = open("/home/pboord/Downloads/yelp/boxText.txt", "w")
-		text_file.write("%s" % boxText)
-		text_file.close()	
-		searchCity = '90 Fuk Wing Street, Hong Kong'
+		searchCity = 'Fuk Wing Street, Hong Kong'
 		params = {
     			'term': boxText,
 			'limit': 1

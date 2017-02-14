@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+<style type="text/css">
+#containerTalk{
+    margin: auto;
+    width: 98%;
+    height: 100%
+}
+#iphone{
+    width: 10%;
+    height: 10%;
+}
+</style>
+
+<div id="containerTalk">
+	<script async class="speakerdeck-embed" data-slide="3" data-id="bf477d3fbb824d0e81823c7a3e71d665" data-ratio="1.93" src="//speakerdeck.com/assets/embed.js"></script>
+        <div id="containerIphone">
+                <p><a  href="{{ url_for('index') }}"><center><img id="iphone" src="http://i.imgur.com/j9f275Y.jpg" alt="iphone"/></center></a></p>
+        </div>
+</div>
+<!--<div>
+	<a  href="youtu.be/5cBCudicv28"><img id="oneClickYoutube" src="http://i.imgur.com/2nDtYqU.jpg" alt="iphone" align="right"/></a>
+</div>-->
+{% endblock %}

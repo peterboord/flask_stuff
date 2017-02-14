@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+-->
+<style type="text/css">
+#container{
+    position: relative;
+    width: 1252px;
+    height: 613px;
+}
+#iphone{
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+#iphoneScreen{
+    position: absolute;
+    top: 42px;
+    left: 152px;
+    width: 947px;
+    height: 532px;
+    background: white;
+}
+#yelpPage{
+    position: absolute;
+    top: 42px;
+    left: 152px;
+    width: 947px;
+    height: 532px;
+    background: white;
+}
+</style>
+
+
+<div id="container">
+	<img id="iphone" src="http://i.imgur.com/VEwl080.jpg" alt="iphone" />
+	<img id="iphoneScreen" src=data:image/jpg;base64,{{imgData}} alt="Photo" />
+	<embed id="yelpPage" />
+</div>
+<p id="coords"></p>
+<p id="boxText"></p>
+<p id="businessNo"></p>
+<script type=text/javascript>
+	var screenLeft = 160;
+	var screenTop = 50;
+	var screenRight = 1106;
+	var screenBottom = 581;
+	var iphoneBlackUrl = "http://i.imgur.com/VEwl080.jpg";
+	var iphoneWhiteUrl = "http://i.imgur.com/R8TOTiM.jpg";
+	var phoneColor = "black";
+	var busNo = 0;
+
+  $(function() {
+	$('#iphoneScreen').click( function(event) {
+		$.getJSON($SCRIPT_ROOT + '/_screenClick', {
+			x: event.clientX - screenLeft,
+			y: event.clientY - screenTop,
+			pc: phoneColor,
+			busNo: $('#businessNo').text()
+      	  	}, function(dataDic) {
+        		var clone=$('#yelpPage').clone();
+        		$('#yelpPage').replaceWith(clone.attr('src',dataDic['yelpUrl']));
+        		var clone=$('#iphoneScreen').clone(true);
+			$('#iphoneScreen').replaceWith(clone.attr('src','data:image/jpg;base64,' + dataDic['imgData']));
+      		});
+	return false;
+	});
+  });
+
+  $(function() {
+	$('#iphone').click( function(event) {
+		var whereClickedX = event.clientX - ( screenLeft + (screenRight - screenLeft)/2 );
+		if (whereClickedX < 0)  {
+	        	var clone=$('#iphone').clone(true);
+			if ( phoneColor == "black" ) {
+				phoneColor = "white";
+        			$('#iphone').replaceWith(clone.attr('src',iphoneWhiteUrl));
+			} else {
+				phoneColor = "black";
+                		$('#iphone').replaceWith(clone.attr('src',iphoneBlackUrl));
+			}
+		}
+	  	$.getJSON($SCRIPT_ROOT + '/_caseClick', {
+            	x: whereClickedX,
+            	y: event.clientY - screenTop,
+	    	pc: phoneColor,
+	    	busNo: $('#businessNo').text()
+		}, function(dataDic) {
+        		var clone=$('#iphoneScreen').clone(true);
+			$('#iphoneScreen').replaceWith(clone.attr('src','data:image/jpg;base64,' + dataDic['imgData']));
+		});
+	return false;
+	});
+  });
+</script>
+
+{% endblock %}
+<!--
+  $(function() {
+	$('#iphoneScreen').click( function(event) {
+		$.getJSON($SCRIPT_ROOT + '/_screenClick', {
+			x: event.clientX - screenLeft,
+			y: event.clientY - screenTop,
+			pc: phoneColor,
+			busNo: $('#businessNo').text()
+      	  	}, function(dataDic) {
+        		var clone=$('#yelpPage').clone();
+        		$('#yelpPage').replaceWith(clone.attr('src',dataDic['yelpUrl']));
+        		var clone=$('#iphoneScreen').clone(true);
+			$('#iphoneScreen').replaceWith(clone.attr('src','data:image/jpg;base64,' + dataDic['imgData']));
+			$('#coords').text(dataDic['clientx'] + ', ' + dataDic['clienty']);
+			$('#boxText').text(dataDic['boxText'])
+      		});
+	return false;
+	});
+  });
+
+
+
+  $(function() {
+	$('#iphone').click( function(event) {
+		var whereClickedX = event.clientX - ( screenLeft + (screenRight - screenLeft)/2 );
+		if (whereClickedX < 0)  {
+	        	var clone=$('#iphone').clone(true);
+			if ( phoneColor == "black" ) {
+				phoneColor = "white";
+        			$('#iphone').replaceWith(clone.attr('src',iphoneWhiteUrl));
+			} else {
+				phoneColor = "black";
+                		$('#iphone').replaceWith(clone.attr('src',iphoneBlackUrl));
+			}
+		}
+	  	$.getJSON($SCRIPT_ROOT + '/_caseClick', {
+            	x: whereClickedX,
+            	y: event.clientY - screenTop,
+	    	pc: phoneColor,
+	    	busNo: $('#businessNo').text()
+		}, function(dataDic) {
+        		var clone=$('#iphoneScreen').clone(true);
+			$('#iphoneScreen').replaceWith(clone.attr('src','data:image/jpg;base64,' + dataDic['imgData']));
+			$('#coords').text(dataDic['clientx'] + ', ' + dataDic['clienty']);
+			$('#boxText').text(dataDic['boxText'])
+		});
+	return false;
+	});
+  });
+
+-->

@@ -1,0 +1,6 @@
+Flask==0.12
+numpy==1.11.1
+requests==2.12.4
+simplejson==3.10.0
+Pillow==4.0.0
+pyocr==0.4.6

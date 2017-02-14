@@ -25,9 +25,17 @@ def caseClick():
         return jsonify(dataDic)
                     
 
+@app.route('/talkStart')
+def talkStart():
+	return render_template('talkStart.html')
+
+@app.route('/talkContinue')
+def talkContinue():
+	return render_template('talkContinue.html')
+
 @app.route('/')
 def index():
-	imgData = open('/home/pboord/Downloads/yelp/waitrose.jpg', 'rb').read().encode('base64').replace('\n', '')
+	imgData = open('/home/pboord/Downloads/yelp/img/yelpHongKong4.jpg', 'rb').read().encode('base64').replace('\n', '')
 	return render_template('index.html', imgData = imgData)
 
 if __name__ == '__main__':
