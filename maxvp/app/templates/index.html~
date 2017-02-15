@@ -1,60 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
-#container{
-    margin: auto;
-    position: relative;
-    width: 1252px;
-    height: 613px;
-}
-#iphoneLeft{
-    width: 50%;
-    height: 100%;
-    background: white;
-}
-#iphoneRight{
-    width: 50%;
-    height: 100%;
-    background: white;
-}
-#iphoneScreen{
-    position: absolute;
-    top: 42px;
-    left: 152px;
-    width: 947px;
-    height: 532px;
-    background: white;
-}
-#yelpPage{
-    position: absolute;
-    top: 42px;
-    left: 152px;
-    width: 947px;
-    height: 532px;
-    background: white;
-}
-        <img id="iphoneScreen" src={{imgData}} alt="Photo" />
-        <embed id="yelpPage" />
-#iphoneScreen{
-    position: absolute;
-    top: 6%;
-    left: 12%;
-    width: 76%;
-    height: 50%;
-    background: black;
-}
-#yelpPage{
-    position: absolute;
-    top: 6%;
-    left: 12%;
-    width: 76%;
-    height: 88%;
-    background: white;
-}
-    background:#222 url(https://d2dfho4r6t7asi.cloudfront.net/assets/linen-20977254ed0ba0794911c98be5e3e456.png);
-
--->
 <style type="text/css">
 #container{
     margin: auto;
@@ -91,39 +37,70 @@
 </style>
 
 <div id="container">
-<!--	<img id="iphone" src="http://i.imgur.com/VEwl080.jpg" alt="iphone"/> -->
 	<a  href="{{ url_for('talkStart') }}"><img id="iphoneLeft" src="http://i.imgur.com/0rdpnk1.jpg" alt="iphone" align="left"/></a>
 	<a  href="{{ url_for('talkContinue') }}"><img id="iphoneRight" src="http://i.imgur.com/T2ORbCm.jpg" alt="iphone" align="right"/></a>
-	<img id="iphoneScreen" src={{imgData}} alt="Photo" align="top"/>
+	<img id="iphoneScreen" src={{imgUrl}} alt="Photo" align="top"/>
 	<embed id="yelpPage" />
-	<!--<img id="iphoneScreen" src=data:image/jpg;base64,{{imgData}} alt="Photo" />-->
 </div>
-<div>
-	<a  href="youtu.be/5cBCudicv28"><img id="oneClickYoutube" src="http://i.imgur.com/2nDtYqU.jpg" alt="iphone" align="right"/></a>
-</div>
-<!--
-<div id="iphoneScreen">
-</div>
--->
 <p id="coords"></p>
 <p id="boxText"></p>
 <p id="businessNo"></p>
 <script type=text/javascript>
-	var screenLeft = 160;
-	var screenTop = 50;
+	var iphoneHalfWidth = 626;
+	var iphoneHeight = 613;
+	var iphoneScreenOriginX = 153;
+	var iphoneScreenOriginY = 42;
+	var screenLeft = ($(window).width()/2-iphoneHalfWidth+iphoneScreenOriginX);
+	var screenTop = iphoneScreenOriginY;
 	var screenRight = 1106;
 	var screenBottom = 581;
-	var iphoneBlackUrl = "http://i.imgur.com/VEwl080.jpg";
-	var iphoneWhiteUrl = "http://i.imgur.com/R8TOTiM.jpg";
-	var phoneColor = "black";
 	var busNo = 0;
+
 
   $(function() {
 	$('#iphoneScreen').click( function(event) {
 		$.getJSON($SCRIPT_ROOT + '/_screenClick', {
 			x: event.clientX - screenLeft,
 			y: event.clientY - screenTop,
-			pc: phoneColor,
+			busNo: $('#businessNo').text()
+      	  	}, function(dataDic) {
+        		var clone=$('#yelpPage').clone();
+        		$('#yelpPage').replaceWith(clone.attr('src',dataDic['yelpUrl']));
+        		// $('#coords').text(dataDic['clientx'] + ', ' + dataDic['clienty']);
+			// $('#boxText').text(dataDic['boxText']);
+      		});
+	return false;
+	});
+  });
+
+</script>
+
+{% endblock %}
+<!--
+
+  $(function() {
+	$('#iphoneScreen').click( function(event) {
+		$.getJSON($SCRIPT_ROOT + '/_screenClick', {
+			x: event.clientX - screenLeft,
+			y: event.clientY - screenTop,
+			busNo: $('#businessNo').text()
+      	  	}, function(dataDic) {
+        		var clone=$('#yelpPage').clone();
+        		$('#yelpPage').replaceWith(clone.attr('src',dataDic['yelpUrl']));
+        		$('#coords').text(dataDic['clientx'] + ', ' + dataDic['clienty']);
+			$('#boxText').text(dataDic['boxText']);
+      		});
+	return false;
+	});
+  });
+
+
+
+  $(function() {
+	$('#iphoneScreen').click( function(event) {
+		$.getJSON($SCRIPT_ROOT + '/_screenClick', {
+			x: event.clientX - screenLeft,
+			y: event.clientY - screenTop,
 			busNo: $('#businessNo').text()
       	  	}, function(dataDic) {
         		var clone=$('#yelpPage').clone();
@@ -135,10 +112,6 @@
 	});
   });
 
-</script>
-
-{% endblock %}
-<!--
   $(function() {
             $(this).css('background-color', 'red');
   }),
