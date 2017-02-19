@@ -14,7 +14,8 @@
 
 <div id="containerTalk">
 	<!-- <script async class="speakerdeck-embed" data-id="bf477d3fbb824d0e81823c7a3e71d665" data-ratio="2.73" src="//speakerdeck.com/assets/embed.js"></script> -->
-	<script async class="speakerdeck-embed" data-id="bf477d3fbb824d0e81823c7a3e71d665" data-ratio="1.83" src="//speakerdeck.com/assets/embed.js"></script>
+<!--	<script async class="speakerdeck-embed" data-id="bf477d3fbb824d0e81823c7a3e71d665" data-ratio="1.93" src="//speakerdeck.com/assets/embed.js"></script>-->
+	<script async class="speakerdeck-embed" data-id="bf477d3fbb824d0e81823c7a3e71d665" data-ratio="3" src="//speakerdeck.com/assets/embed.js"></script>
 	<div id="containerIphone">
 		<p><a  href="{{ url_for('index') }}"><center><img id="iphone" src="http://i.imgur.com/j9f275Y.jpg" alt="iphone"/></center></a></p>
 	</div>
@@ -23,6 +24,15 @@
 {% endblock %}
 
 <!--
+#containerTalk{
+    margin: auto;
+    width: 98%;
+    height: 100%
+}
+#iphone{
+    width: 10%;
+    height: 10%;
+}
 	<script async class="speakerdeck-embed" data-id="bf477d3fbb824d0e81823c7a3e71d665" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 <div id="containerAll">
